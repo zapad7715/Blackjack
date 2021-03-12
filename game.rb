@@ -75,9 +75,15 @@ class Game
   end
 
   def determine_winner
-    return @dealer if @user.score > 21
     return @user if @dealer.score > 21
+    return @dealer if @user.score > 21
     @dealer.score > @user.score ? @dealer : @user
+  end
+
+  def revert_bets
+    @user.take_money(BET)
+    @dealer.take_money(BET)
+    @bets = 0
   end
 
   def hit(player)
@@ -90,9 +96,14 @@ class Game
   def open_cards
     end_con
     @players.each { |player| show_cards(player) }
-    winner = determine_winner
-    show_winner(winner)
-    winner.take_money(@bets)
+    if @player.score == @dealer.score
+      show_dead_heat
+      revert_bets
+    else
+      winner = determine_winner
+      show_winner(winner)
+      winner.take_money(@bets)
+    end
     start
   end
 

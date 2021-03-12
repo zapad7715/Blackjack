@@ -67,6 +67,10 @@ module Show
     puts "Победитель: #{winner}!"
   end
 
+  def show_dead_heat
+    puts "Ничья!"
+  end
+
   def total(player)
     puts "Всего очков: #{player.score}"
   end
