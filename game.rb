@@ -14,12 +14,24 @@ class Game
     @deck = Deck.new
     @bets = 0
     greeting(@user)
-    start
+  end
+
+  def start
+    start_menu(@user)
+    choise = gets.chomp
+    case choise
+    when 'y'
+      new_con
+      start_con
+    else
+      puts 'Выход.'
+      exit
+    end
   end
 
   private
 
-  def betting(bet)
+  def make_bet(bet = BET)
     @players.each { |player| @bets += player.give_money!(bet) }
   rescue RuntimeError => e
     show_message(e.message)
@@ -84,25 +96,12 @@ class Game
     start
   end
 
-  def start
-    start_menu(@user)
-    choise = gets.chomp
-    case choise
-    when 'y'
-      new_con
-      start_con
-    else
-      puts 'Выход.'
-      exit
-    end
-  end
-
   def start_con
     cleanup
     2.times do
       @players.each { |player| player.take_card(@deck) }
     end
-    betting(BET)
+    make_bet(BET)
     con
   end
 

@@ -6,4 +6,4 @@ require_relative './deck'
 require_relative './game'
 require_relative './player'
 
-Game.new
+Game.new.start
